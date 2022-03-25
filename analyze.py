@@ -67,7 +67,7 @@ def build_predicate(from_str: str):
         actual_value = getattr(source, attr_name)
         if actual_value is None:
             return False
-        return op(actual_value, int(attr_value))
+        return op(actual_value, float(attr_value))
 
     if from_str == '' or from_str is None:
         return lambda source: True
@@ -106,7 +106,10 @@ def analyze(raw_args: Sequence[str]):
                         help='level of verbosity', default='progress',
                         choices=['silent', 'progress', 'all'])
     parser.add_argument('--filter', '-f',
-                        help='', required=False)
+                        help='use an expression to filter sources, '
+                             'e.g. "year>2000" to plot only sources published after 2000. '
+                             'Allowed attributes: year, num_cites, cites_per_year, cites_per_author',
+                        required=False)
 
     args = parser.parse_args(raw_args)
 
